@@ -3,9 +3,9 @@ import cv2
 import argparse
 import glob
 import torch
+from basicsr.utils.download_util import load_file_from_url
 from torchvision.transforms.functional import normalize
 from basicsr.utils import imwrite, img2tensor, tensor2img
-from basicsr.utils.download_util import load_file_from_url
 from facelib.utils.face_restoration_helper import FaceRestoreHelper
 from facelib.utils.misc import is_gray
 import torch.nn.functional as F
@@ -28,7 +28,7 @@ def set_realesrgan():
         from basicsr.utils.realesrgan_utils import RealESRGANer
         model = RRDBNet(num_in_ch=3, num_out_ch=3, num_feat=64, num_block=23, num_grow_ch=32, scale=2)
         bg_upsampler = RealESRGANer(
-            scale=1,
+            scale=2,
             model_path='https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.1/RealESRGAN_x2plus.pth',
             model=model,
             tile=args.bg_tile,
@@ -52,7 +52,7 @@ if __name__ == '__main__':
     parser.add_argument('--draw_box', action='store_true')
     parser.add_argument('--bg_upsampler', type=str, default='None', help='background upsampler. Optional: realesrgan')
     parser.add_argument('--face_upsample', action='store_true', help='face upsampler after enhancement.')
-    parser.add_argument('--bg_tile', type=int, default=400, help='Tile size for background sampler. Default: 400')
+    parser.add_argument('--bg_tile', type=int, default=400, help='Tile size for background sampler. Default: 200')
 
     args = parser.parse_args()
 
