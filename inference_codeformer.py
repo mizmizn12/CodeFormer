@@ -52,7 +52,7 @@ if __name__ == '__main__':
     parser.add_argument('--draw_box', action='store_true')
     parser.add_argument('--bg_upsampler', type=str, default='None', help='background upsampler. Optional: realesrgan')
     parser.add_argument('--face_upsample', action='store_true', help='face upsampler after enhancement.')
-    parser.add_argument('--bg_tile', type=int, default=400, help='Tile size for background sampler. Default: 200')
+    parser.add_argument('--bg_tile', type=int, default=400, help='Tile size for background sampler. Default: 400')
 
     args = parser.parse_args()
 
@@ -130,7 +130,7 @@ if __name__ == '__main__':
             face_helper.read_image(img)
             # get face landmarks for each face
             num_det_faces = face_helper.get_face_landmarks_5(
-                only_center_face=args.only_center_face, resize=640, eye_dist_threshold=5)
+                only_center_face=args.only_center_face, resize=320, eye_dist_threshold=5)
             print(f'\tdetect {num_det_faces} faces')
             # align and warp each face
             face_helper.align_warp_face()
